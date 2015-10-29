@@ -1,7 +1,7 @@
 Package.describe({
-    name:    "angular-babel",
+    name:    "pbastowski:ng-babel",
     summary: "Babel compiler and ng-annotate all in the one package for Meteor 1.2+",
-    version: "0.0.1",
+    version: "0.0.2",
     git:     "https://github.com/pbastowski/angular-babel.git"
 });
 
