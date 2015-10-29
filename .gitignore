@@ -12,6 +12,7 @@ Thumbs.db
 # IDE's #
 #########
 .idea
+.npm
 
 .meteor/local/bower
 .coverage
