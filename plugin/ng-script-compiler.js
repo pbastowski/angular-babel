@@ -4,16 +4,16 @@ var ngAnnotate = Npm.require('ng-annotate');
 var config = {
     // print loaded config
     'debug':   false,
-    
+
     // print active file extensions
     'verbose': true,
-    
+
     // experimental ES7 support
     'stage':   0,
-    
+
     // what module system to use
     'modules': 'common',
-    
+
     // When Babel adds use-strict it kills Meteor's "global" objects
     // that is, those declared in a file with out var. So, we blacklist it.
     blacklist: ['useStrict'],
@@ -38,12 +38,15 @@ var processFile = function (file) {
     var lastHash = fileContentsCache[inputFile] && fileContentsCache[inputFile].hash;
     var currentHash = file.getSourceHash();
 
-    var transpile = file._resourceSlot.inputResource.fileOptions.transpile;
+    var transpile;
+    if (file._resourceSlot.inputResource.fileOptions)
+      transpile = file._resourceSlot.inputResource.fileOptions.transpile;
+
     transpile = transpile || typeof transpile === 'undefined';
-    
+
     // Only compile files that have changed since the last run
     if ( !lastHash || lastHash !== currentHash ) {
-        
+
         if (transpile) {
             console.log('  ' + inputFile);
 
@@ -70,17 +73,17 @@ var processFile = function (file) {
             var annotated = ngAnnotate(output, {
                 add: true
             });
-    
+
             if (annotated.errors) {
                 throw new Error(annotated.errors.join(': \n\n'));
             }
-            
+
             output = annotated.src;
-        
+
         } else {
             output = source;
         }
-        
+
         // Update the code cache
         fileContentsCache[inputFile] = {hash: currentHash, code: output};
 
